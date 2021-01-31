@@ -6,9 +6,21 @@ from tkinter.constants import LEFT
 
 directory = r""
 namesDict = {}
-isComplete = False
 
 ############ FUNCTIONS ############
+# Close the window
+def closeButton():
+  window.destroy()
+  
+# Reset all values
+def resetButton():
+  global directory, namesDict
+  directory = r""
+  namesDict = {}
+  lbl_loading['text'] = ''
+  lbl_complete['text'] = ''
+  lbl_file_location["text"] = ''
+
 # Get the file location of the folder
 def get_file_location():
   global directory
@@ -135,7 +147,7 @@ window = tk.Tk()
 window.title("Messenger Analyzer")
 window.configure(bg='#fafafa')
 window.resizable(width=True, height=True)
-window.geometry('800x550')
+window.geometry('850x600')
 
 # Program Title
 frame_title = tk.Frame(master=window, height=150, bg='#fafafa')
@@ -190,6 +202,13 @@ btn_analyze.pack(pady=(20, 10), side=tk.TOP)
 lbl_loading.pack(pady=12, side=tk.LEFT)
 lbl_complete.pack(pady=12, side=tk.LEFT)
 
+frame_resetClose = tk.Frame(master=window, bg='#fafafa')
+frame_resetClose.pack(side=tk.TOP, anchor=tk.E)
+
+btn_reset = tk.Button(master=frame_resetClose, text='Reset', bg='#bf3528', fg='white', font=('Helvetica', 13), command=resetButton)
+btn_close = tk.Button(master=frame_resetClose, text='Close', bg='#b5b5b5', font=('Helvetica', 13), command=closeButton)
+btn_reset.pack(side=tk.LEFT, anchor=tk.E, padx=10, pady=5)
+btn_close.pack(side=tk.LEFT, anchor=tk.E, padx=10, pady=5)
 
 # Run the application
 window.mainloop()
