@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-import json
-import os
+import json, sys, os
 
 directory = r""
 namesDict = {}
@@ -42,9 +41,9 @@ def loading():
       lbl_complete['text'] = ''
       window.update_idletasks()
       output_analyzed_files()
-    except:
+    except Exception as e:
       # If user selected the wrong folder
-      lbl_loading['text'] = 'Sorry... Something went wrong! Maybe you selected the wrong folder'
+      lbl_loading['text'] = 'Sorry... Something went wrong! Maybe you selected the wrong folder. Error: {e}'.format(e=e)
     
 # Run the analysis
 def output_analyzed_files():
@@ -52,22 +51,25 @@ def output_analyzed_files():
   for filename in os.listdir(directory):
     subdir = os.path.join(directory, filename)
     # Each person's folder
-    for personFolder in os.listdir(subdir):
-      if personFolder.endswith('.json'):
-        personJson = os.path.join(subdir, personFolder)
-        initializeNames(personJson)
+    if os.path.isdir(subdir):
+      for personFolder in os.listdir(subdir):
+        if personFolder.endswith('.json'):
+          personJson = os.path.join(subdir, personFolder)
+          initializeNames(personJson)
         
   # Loop through each folder + file to update dictionary values
   for filename in os.listdir(directory):
     subdir = os.path.join(directory, filename)
     # Each person's folder
-    for personFolder in os.listdir(subdir):
-      if personFolder.endswith('.json'):
-        personJson = os.path.join(subdir, personFolder)
-        openFiles(personJson)
+    if os.path.isdir(subdir):
+      for personFolder in os.listdir(subdir):
+        if personFolder.endswith('.json'):
+          personJson = os.path.join(subdir, personFolder)
+          openFiles(personJson)
 
   # Delete unclean data
-  namesDict.pop('Facebook User')
+  if 'Facebook User' in namesDict.keys():
+    temp = namesDict.pop('Facebook User')
 
   # Count the total for each person (chat + gifs + photos + sticker + ...)
   for personName in namesDict:
@@ -195,17 +197,17 @@ btn_analyze = tk.Button(
 	activebackground='#918cff',
 	bg='#dad9ff',
 )
-lbl_loading = tk.Label(master=frame_analyze, text="", bg='#fafafa', justify=tk.CENTER)
-lbl_complete = tk.Label(master=frame_analyze, text="", bg='#fafafa', justify=tk.CENTER)
+lbl_loading = tk.Label(master=frame_analyze, wraplength=700, text="", bg='#fafafa', justify=tk.CENTER)
+lbl_complete = tk.Label(master=frame_analyze, wraplength=700, text="", bg='#fafafa', justify=tk.CENTER)
 btn_analyze.pack(pady=(20, 10), side=tk.TOP)
 lbl_loading.pack(pady=12, side=tk.LEFT)
 lbl_complete.pack(pady=12, side=tk.LEFT)
 
+# Reset + close Button
 frame_resetClose = tk.Frame(master=window, bg='#fafafa')
 frame_resetClose.pack(side=tk.TOP, anchor=tk.E)
-
-btn_reset = tk.Button(master=frame_resetClose, text='Reset', bg='#bf3528', fg='white', font=('Helvetica', 13), command=resetButton)
-btn_close = tk.Button(master=frame_resetClose, text='Close', bg='#b5b5b5', font=('Helvetica', 13), command=closeButton)
+btn_reset = tk.Button(master=frame_resetClose, text='Reset', font=('Helvetica', 13), command=resetButton)
+btn_close = tk.Button(master=frame_resetClose, text='Close', font=('Helvetica', 13), command=closeButton)
 btn_reset.pack(side=tk.LEFT, anchor=tk.E, padx=10, pady=5)
 btn_close.pack(side=tk.LEFT, anchor=tk.E, padx=10, pady=5)
 
