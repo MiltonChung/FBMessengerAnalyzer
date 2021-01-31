@@ -17,6 +17,9 @@ def get_file_location():
 
 # Display Loading... text and any error msg
 def loading():
+  # Clear labels first
+  lbl_loading['text'] = ''
+  lbl_complete['text'] = ''
   # If user didn't select any folder
   if (directory == ''):
     lbl_loading['text'] = 'Please select a folder location'
@@ -29,7 +32,7 @@ def loading():
       output_analyzed_files()
     except:
       # If user selected the wrong folder
-      lbl_loading['text'] = 'Sorry... Something went wrong! Maybe you selected the wrong foler'
+      lbl_loading['text'] = 'Sorry... Something went wrong! Maybe you selected the wrong folder'
     
 # Run the analysis
 def output_analyzed_files():
