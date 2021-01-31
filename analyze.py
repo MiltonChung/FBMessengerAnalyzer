@@ -5,15 +5,24 @@ import os
 
 directory = r""
 namesDict = {}
+isComplete = False
 
+############ FUNCTIONS ############
+# Get the file location of the folder
 def get_file_location():
   global directory
   directory = filedialog.askdirectory()
   lbl_file_location["text"] = directory
   print(directory)
 
+def loading():
+  lbl_loading['text'] = 'Analyzing...'
+  lbl_complete['text'] = ''
+  window.update_idletasks()
+  output_analyzed_files()
+
+# Run the analysis
 def output_analyzed_files():
-  print(directory)
   # Loop through each folder + file to initialize the Names Dictionary
   for filename in os.listdir(directory):
     subdir = os.path.join(directory, filename)
@@ -59,7 +68,10 @@ def output_analyzed_files():
   statsFile.close()
 
   print('Done!')
+  lbl_loading['text'] = ''
+  lbl_complete['text'] = 'Done! The files are in the same folder as this program.'
 
+# Initialize the Names Dictionary
 def initializeNames(personJson):
 	with open(personJson) as f:
 		data = json.load(f)
@@ -103,16 +115,18 @@ def openFiles(personJson):
 	f.close()
 
 
+############ Tkinter Window Logic ############
 # Set-up the window
 window = tk.Tk()
 window.title("Messenger Analyzer")
+window.configure(bg='#fafafa')
 window.resizable(width=True, height=True)
 window.geometry('700x500')
 
 # Program Title
-frame_title = tk.Frame(master=window, height=150)
-frame_title.pack(fill=tk.X)
-title = tk.Label(text='Messenger Analyzer', master=frame_title, font=('Arial', 35), justify=tk.CENTER)
+frame_title = tk.Frame(master=window, height=150, bg='#fafafa')
+frame_title.pack()
+title = tk.Label(text='Messenger Analyzer', master=frame_title, font=("Helvetica", "35", "bold"),  bg='#fafafa')
 title.pack()
 
 # Instructions
@@ -124,22 +138,38 @@ title.pack()
 # instr.pack()
 
 # File Location
+frame_file = tk.Frame(master=window, height= 150, bg='#fafafa')
+frame_file.pack(side=tk.TOP)
 btn_get_file = tk.Button(
-  master=window,
+  master=frame_file,
+	font=("Helvetica",12),
   text="Select your foler",
-  command=get_file_location
+  command=get_file_location,
+	activebackground='#918cff',
+	bg='#dad9ff',
+	relief=tk.GROOVE
 )
-lbl_file_location = tk.Label(master=window, text="")
-btn_get_file.pack()
-lbl_file_location.pack()
+lbl_file_location = tk.Label(master=frame_file, text="", bg='#fafafa')
+btn_get_file.pack(padx=5, pady=(60, 10), side=tk.LEFT)
+lbl_file_location.pack( pady=(60, 10), side=tk.LEFT)
 
-# Analyze
+# Analyze Button
+frame_analyze = tk.Frame(master=window, bg='#fafafa')
+frame_analyze.pack(side=tk.TOP)
 btn_analyze = tk.Button(
-  master=window,
+  master=frame_analyze,
   text="Analyze!",
-  command=output_analyzed_files
+  command=loading,
+	font=("Helvetica", 30),
+	activebackground='#918cff',
+	bg='#dad9ff',
 )
-btn_analyze.pack()
+lbl_loading = tk.Label(master=frame_analyze, text="", bg='#fafafa', justify=tk.CENTER)
+lbl_complete = tk.Label(master=frame_analyze, text="", bg='#fafafa', justify=tk.CENTER)
+btn_analyze.pack(pady=(50, 10), side=tk.TOP)
+lbl_loading.pack(pady=12, side=tk.LEFT)
+lbl_complete.pack(pady=12, side=tk.LEFT)
+
 
 # Run the application
 window.mainloop()
