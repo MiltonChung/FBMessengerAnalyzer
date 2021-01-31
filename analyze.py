@@ -16,10 +16,13 @@ def get_file_location():
   print(directory)
 
 def loading():
-  lbl_loading['text'] = 'Analyzing...'
-  lbl_complete['text'] = ''
-  window.update_idletasks()
-  output_analyzed_files()
+  if (directory == ''):
+    lbl_loading['text'] = 'Please select a folder location'
+  else:
+    lbl_loading['text'] = 'Analyzing...                                       '
+    lbl_complete['text'] = ''
+    window.update_idletasks()
+    output_analyzed_files()
 
 # Run the analysis
 def output_analyzed_files():
