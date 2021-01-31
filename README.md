@@ -13,6 +13,7 @@ Simple Facebook Messenger analyzer where it tells you who you have interacted wi
 -  [Challenges](#challenges)
 -  [Inspiration](#inspiration)
 -  [Time Spent](#time-spent)
+-  [Bugs](#bugs)
 
 ## About
 
@@ -67,3 +68,6 @@ On a Friday afternoon, I was wondering who I text the most on messenger and all 
 
 So far, I've spent around 9.5 hours on this project!
 
+## Bugs
+
+If you find any bugs or something isn't working, make an issue or contact me!
