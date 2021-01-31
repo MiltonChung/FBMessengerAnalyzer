@@ -1,4 +1,4 @@
-# FBMessengerAnalyzer
+# Facebook Messenger Analyzer
 
 Simple Facebook Messenger analyzer where it tells you who you have interacted with the most(excluding groupchats).
 
