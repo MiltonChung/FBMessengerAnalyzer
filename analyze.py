@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog
 import json
 import os
+from tkinter.constants import LEFT
 
 directory = r""
 namesDict = {}
@@ -64,18 +65,18 @@ def output_analyzed_files():
         namesDict[personName]['total'] += namesDict[personName][individualStat]
 
   # Order Alphabetically
-  statsFile = open('./messengerStatsUnordered.txt', 'w')
+  statsFile = open('./MA_Alphabetical_Order.txt', 'w')
   statsFile.write(json.dumps(namesDict, indent=4, sort_keys=True))
   statsFile.close()
 
   # Order by Chat count
-  statsFile = open('./messengerStatsChatOrder.txt', 'w')
+  statsFile = open('./MA_Chat_Count_Order.txt', 'w')
   chatOrderDict = dict(sorted(namesDict.items(), key=lambda item: item[1]['chat'], reverse = True))
   statsFile.write(json.dumps(chatOrderDict, indent=4))
   statsFile.close()
 
   # Order by Total count
-  statsFile = open('./messengerStatsTotalOrder.txt', 'w')
+  statsFile = open('./MA_Total_Count_Order.txt', 'w')
   totalOrderDict = dict(sorted(namesDict.items(), key=lambda item: item[1]['total'], reverse = True))
   statsFile.write(json.dumps(totalOrderDict, indent=4))
   statsFile.close()
@@ -134,7 +135,7 @@ window = tk.Tk()
 window.title("Messenger Analyzer")
 window.configure(bg='#fafafa')
 window.resizable(width=True, height=True)
-window.geometry('700x500')
+window.geometry('800x550')
 
 # Program Title
 frame_title = tk.Frame(master=window, height=150, bg='#fafafa')
@@ -143,12 +144,18 @@ title = tk.Label(text='Messenger Analyzer', master=frame_title, font=("Helvetica
 title.pack()
 
 # Instructions
-# frame_instr = tk.Frame(master=window, height=150)
-# frame_instr.pack(fill=tk.X)
-# instr = tk.Text( master=frame_instr, font=('Arial', 18))
-# instr.insert(tk.INSERT, "asdasd")
-# instr.insert(tk.END, 'asdad123123')
-# instr.pack()
+frame_instr = tk.Frame(master=window, height=150, bg='#fafafa')
+frame_instr.pack(side=tk.TOP)
+instr1 = tk.Label(master=frame_instr, wraplength=700, justify=tk.LEFT, bg='#fafafa', font=('Helvetica', 11), text='1. Go to your facebook "Settings"(top right drop-down menu) > "Your Facebook Information" > Download Your Information')
+instr2 = tk.Label(master=frame_instr, wraplength=700, justify=tk.LEFT, bg='#fafafa', font=('Helvetica', 11), text='2. Request the data in JSON format and any Media Quality. Go down a little and click Deselect All and check only the Messages checkbox and click Create File.')
+instr3 = tk.Label(master=frame_instr, wraplength=700, justify=tk.LEFT, bg='#fafafa', font=('Helvetica', 11), text='3. Wait until Facebook created your data and download them')
+instr4 = tk.Label(master=frame_instr, wraplength=700, justify=tk.LEFT, bg='#fafafa', font=('Helvetica', 11), text='4. Combine all the messages folders together into one folder')
+instr5 = tk.Label(master=frame_instr, wraplength=700, justify=tk.LEFT, bg='#fafafa', font=('Helvetica', 11), text='5. Select the /messages/inbox folder. Ex: C:\\Users\\Mewton\\Desktop\\messages\\inbox. Make sure the inbox folder contains folders of your friends chat history.')
+instr1.pack(side=tk.TOP, pady=7, anchor=tk.W)
+instr2.pack(side=tk.TOP, pady=7, anchor=tk.W)
+instr3.pack(side=tk.TOP, pady=7, anchor=tk.W)
+instr4.pack(side=tk.TOP, pady=7, anchor=tk.W)
+instr5.pack(side=tk.TOP, pady=7, anchor=tk.W)
 
 # File Location
 frame_file = tk.Frame(master=window, height= 150, bg='#fafafa')
@@ -156,15 +163,15 @@ frame_file.pack(side=tk.TOP)
 btn_get_file = tk.Button(
   master=frame_file,
 	font=("Helvetica",12),
-  text="Select your foler",
+  text="Select your folder",
   command=get_file_location,
 	activebackground='#918cff',
 	bg='#dad9ff',
 	relief=tk.GROOVE
 )
 lbl_file_location = tk.Label(master=frame_file, text="", bg='#fafafa')
-btn_get_file.pack(padx=5, pady=(60, 10), side=tk.LEFT)
-lbl_file_location.pack( pady=(60, 10), side=tk.LEFT)
+btn_get_file.pack(padx=5, pady=(20, 10), side=tk.LEFT)
+lbl_file_location.pack( pady=(20, 10), side=tk.LEFT)
 
 # Analyze Button
 frame_analyze = tk.Frame(master=window, bg='#fafafa')
@@ -179,7 +186,7 @@ btn_analyze = tk.Button(
 )
 lbl_loading = tk.Label(master=frame_analyze, text="", bg='#fafafa', justify=tk.CENTER)
 lbl_complete = tk.Label(master=frame_analyze, text="", bg='#fafafa', justify=tk.CENTER)
-btn_analyze.pack(pady=(50, 10), side=tk.TOP)
+btn_analyze.pack(pady=(20, 10), side=tk.TOP)
 lbl_loading.pack(pady=12, side=tk.LEFT)
 lbl_complete.pack(pady=12, side=tk.LEFT)
 
