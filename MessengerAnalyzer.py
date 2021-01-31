@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import filedialog
 import json
 import os
-from tkinter.constants import LEFT
 
 directory = r""
 namesDict = {}
