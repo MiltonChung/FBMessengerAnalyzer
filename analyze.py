@@ -15,15 +15,22 @@ def get_file_location():
   lbl_file_location["text"] = directory
   print(directory)
 
+# Display Loading... text and any error msg
 def loading():
+  # If user didn't select any folder
   if (directory == ''):
     lbl_loading['text'] = 'Please select a folder location'
   else:
-    lbl_loading['text'] = 'Analyzing...                                       '
-    lbl_complete['text'] = ''
-    window.update_idletasks()
-    output_analyzed_files()
-
+    try:
+      # Run this if the user selected the correct folder
+      lbl_loading['text'] = 'Analyzing...                                       '
+      lbl_complete['text'] = ''
+      window.update_idletasks()
+      output_analyzed_files()
+    except:
+      # If user selected the wrong folder
+      lbl_loading['text'] = 'Sorry... Something went wrong! Maybe you selected the wrong foler'
+    
 # Run the analysis
 def output_analyzed_files():
   # Loop through each folder + file to initialize the Names Dictionary
