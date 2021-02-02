@@ -71,3 +71,5 @@ So far, I've spent around 9.5 hours on this project!
 ## Bugs
 
 If you find any bugs or something isn't working, make an issue or contact me!
+
+*I do not store or send any information. It's purely just analyzing the data on the spot!*
